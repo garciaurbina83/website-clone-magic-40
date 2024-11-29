@@ -9,8 +9,13 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Sidebar />
       
-      <main className="ml-64 p-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <main className="ml-64 p-6 lg:p-8">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold mb-2">Dashboard Overview</h1>
+          <p className="text-muted-foreground">Welcome back! Here's what's happening with your accounts.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
           <StatsCard
             title="Total Earnings"
             amount="7,245.00"
@@ -31,7 +36,7 @@ const Index = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
           <div className="lg:col-span-2">
             <RevenueChart />
           </div>
@@ -40,7 +45,7 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div>
           <TransactionList />
         </div>
       </main>
