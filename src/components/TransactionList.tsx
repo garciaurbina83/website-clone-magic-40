@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { CalendarIcon, ChevronUpDown } from "lucide-react";
+import { CalendarIcon, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -80,12 +80,12 @@ const TransactionList = () => {
   const getSortIcon = (key: SortConfig['key']) => {
     if (sortConfig?.key === key) {
       return (
-        <ChevronUpDown className={`ml-1 h-4 w-4 ${
+        <ChevronsUpDown className={`ml-1 h-4 w-4 ${
           sortConfig.direction === 'asc' ? 'transform rotate-180' : ''
         }`} />
       );
     }
-    return <ChevronUpDown className="ml-1 h-4 w-4 text-muted-foreground/50" />;
+    return <ChevronsUpDown className="ml-1 h-4 w-4 text-muted-foreground/50" />;
   };
 
   return (
