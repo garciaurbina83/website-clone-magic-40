@@ -1,14 +1,19 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Card } from "@/components/ui/card";
 
 const data = [
-  { name: 'Jan', value: 4000 },
-  { name: 'Feb', value: 3000 },
-  { name: 'Mar', value: 5000 },
-  { name: 'Apr', value: 2780 },
-  { name: 'May', value: 1890 },
-  { name: 'Jun', value: 2390 },
-  { name: 'Jul', value: 3490 },
+  { name: 'Jan', pending: 5, signed: 0, lost: 0 },
+  { name: 'Feb', pending: 8, signed: 0, lost: 0 },
+  { name: 'Mar', pending: 7, signed: 0, lost: 0 },
+  { name: 'Apr', pending: 4, signed: 0, lost: 0 },
+  { name: 'May', pending: 10, signed: 0, lost: 0 },
+  { name: 'Jun', pending: 8, signed: 12, lost: 5 },
+  { name: 'Jul', pending: 15, signed: 0, lost: 0 },
+  { name: 'Aug', pending: 17, signed: 0, lost: 0 },
+  { name: 'Sep', pending: 8, signed: 0, lost: 0 },
+  { name: 'Oct', pending: 10, signed: 0, lost: 0 },
+  { name: 'Nov', pending: 4, signed: 0, lost: 0 },
+  { name: 'Dec', pending: 7, signed: 0, lost: 0 },
 ];
 
 const RevenueChart = () => {
@@ -17,18 +22,26 @@ const RevenueChart = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-semibold">Revenue Flow</h3>
-          <p className="text-sm text-muted-foreground">Monthly revenue statistics</p>
+          <p className="text-sm text-muted-foreground">Jan 10 - Jan 16</p>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 rounded-full bg-primary" />
-            <span className="text-sm text-muted-foreground">Revenue</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#FDB022]" />
+            <span className="text-sm text-muted-foreground">Pending</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#22C55E]" />
+            <span className="text-sm text-muted-foreground">Signed</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#FF5757]" />
+            <span className="text-sm text-muted-foreground">Lost</span>
           </div>
         </div>
       </div>
       <div className="h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <LineChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
             <XAxis 
               dataKey="name" 
@@ -36,13 +49,17 @@ const RevenueChart = () => {
               axisLine={false}
               tickLine={false}
               dy={10}
+              tick={{ fontSize: 12 }}
             />
             <YAxis 
               stroke="#9CA3AF" 
               axisLine={false}
               tickLine={false}
               dx={-10}
-              tickFormatter={(value) => `$${value}`}
+              tick={{ fontSize: 12 }}
+              tickFormatter={(value) => `${value}%`}
+              domain={[0, 25]}
+              ticks={[0, 5, 10, 15, 20, 25]}
             />
             <Tooltip
               contentStyle={{
@@ -51,15 +68,31 @@ const RevenueChart = () => {
                 borderRadius: '8px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}
-              formatter={(value: number) => [`$${value}`, 'Revenue']}
+              formatter={(value: number) => [`${value}%`]}
             />
             <Line
               type="monotone"
-              dataKey="value"
+              dataKey="pending"
+              stroke="#FDB022"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4, fill: "#FDB022" }}
+            />
+            <Line
+              type="monotone"
+              dataKey="signed"
               stroke="#22C55E"
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4, fill: "#22C55E" }}
+            />
+            <Line
+              type="monotone"
+              dataKey="lost"
+              stroke="#FF5757"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4, fill: "#FF5757" }}
             />
           </LineChart>
         </ResponsiveContainer>
