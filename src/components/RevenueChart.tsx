@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card } from "@/components/ui/card";
 
 const data = [
@@ -41,7 +41,7 @@ const RevenueChart = () => {
       </div>
       <div className="h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
+          <AreaChart data={data} margin={{ top: 5, right: 5, bottom: 5, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#374151" vertical={false} />
             <XAxis 
               dataKey="name" 
@@ -70,31 +70,37 @@ const RevenueChart = () => {
               }}
               formatter={(value: number) => [`${value}%`]}
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="pending"
               stroke="#FDB022"
+              fill="#FDB022"
+              fillOpacity={0.1}
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4, fill: "#FDB022" }}
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="signed"
               stroke="#22C55E"
+              fill="#22C55E"
+              fillOpacity={0.1}
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4, fill: "#22C55E" }}
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="lost"
               stroke="#FF5757"
+              fill="#FF5757"
+              fillOpacity={0.1}
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4, fill: "#FF5757" }}
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </div>
     </Card>
