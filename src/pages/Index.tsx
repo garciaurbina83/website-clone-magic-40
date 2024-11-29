@@ -3,6 +3,7 @@ import StatsCard from "@/components/StatsCard";
 import RevenueChart from "@/components/RevenueChart";
 import TransactionList from "@/components/TransactionList";
 import EfficiencyChart from "@/components/EfficiencyChart";
+import { Command, CommandInput } from "@/components/ui/command";
 
 const Index = () => {
   return (
@@ -10,9 +11,18 @@ const Index = () => {
       <Sidebar />
       
       <main className="ml-64 p-6 lg:p-8">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2">Dashboard Overview</h1>
-          <p className="text-muted-foreground">Welcome back! Here's what's happening with your accounts.</p>
+        <div className="flex flex-col gap-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold mb-2">Dashboard Overview</h1>
+              <p className="text-muted-foreground">Welcome back! Here's what's happening with your accounts.</p>
+            </div>
+            <div className="w-[300px]">
+              <Command className="rounded-lg border shadow-md">
+                <CommandInput placeholder="Search transactions..." />
+              </Command>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
