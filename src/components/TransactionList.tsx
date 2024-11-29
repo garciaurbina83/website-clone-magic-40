@@ -1,74 +1,99 @@
 import { Card } from "@/components/ui/card";
-import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
+import { CalendarIcon } from "lucide-react";
 
 const transactions = [
   {
     id: 1,
-    name: "Sarah Connor",
-    amount: "$150.00",
-    status: "Completed",
-    date: "Today",
+    name: "Devon Lane",
+    email: "devon@mail.com",
+    location: "Philadelphia, USA",
+    amount: "$50.00",
     type: "incoming",
   },
   {
     id: 2,
-    name: "John Smith",
-    amount: "$89.99",
-    status: "Pending",
-    date: "Yesterday",
-    type: "outgoing",
+    name: "Bessie Cooper",
+    email: "devon@mail.com",
+    location: "Philadelphia, USA",
+    amount: "$50.00",
+    type: "incoming",
   },
   {
     id: 3,
-    name: "Emma Wilson",
-    amount: "$299.99",
-    status: "Completed",
-    date: "Yesterday",
+    name: "Darrell Steward",
+    email: "devon@mail.com",
+    location: "Philadelphia, USA",
+    amount: "$50.00",
     type: "incoming",
   },
 ];
 
 const TransactionList = () => {
   return (
-    <Card className="bg-secondary p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="space-y-4">
+      <div className="grid grid-cols-4 gap-4">
         <div>
-          <h3 className="text-lg font-semibold">Recent Transactions</h3>
-          <p className="text-sm text-muted-foreground">Your recent financial activities</p>
+          <label className="text-sm text-muted-foreground mb-2 block">Location</label>
+          <Select>
+            <option>Enter or province</option>
+          </Select>
+        </div>
+        <div>
+          <label className="text-sm text-muted-foreground mb-2 block">Amount Spent</label>
+          <Select>
+            <option>Enter or province</option>
+          </Select>
+        </div>
+        <div>
+          <label className="text-sm text-muted-foreground mb-2 block">Transaction End Date</label>
+          <div className="relative">
+            <Input placeholder="Select or province" />
+            <CalendarIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          </div>
+        </div>
+        <div>
+          <label className="text-sm text-muted-foreground mb-2 block">Type of Transaction</label>
+          <Select>
+            <option>Enter or province</option>
+          </Select>
         </div>
       </div>
-      <div className="space-y-4">
-        {transactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className="flex items-center justify-between p-4 bg-muted rounded-lg hover:bg-background/5 transition-colors duration-200"
-          >
-            <div className="flex items-center gap-4">
-              <div className={`p-2 rounded-full ${
-                transaction.type === 'incoming' ? 'bg-primary/20 text-primary' : 'bg-destructive/20 text-destructive'
-              }`}>
-                {transaction.type === 'incoming' ? 
-                  <ArrowUpRight className="w-4 h-4" /> : 
-                  <ArrowDownRight className="w-4 h-4" />
-                }
-              </div>
-              <div>
-                <p className="font-medium">{transaction.name}</p>
-                <p className="text-sm text-muted-foreground">{transaction.date}</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="font-medium">{transaction.amount}</p>
-              <p className={`text-sm ${
-                transaction.status === "Completed" ? "text-primary" : "text-yellow-500"
-              }`}>
-                {transaction.status}
-              </p>
-            </div>
+
+      <Card className="bg-secondary/50 border-0">
+        <div className="min-w-full divide-y divide-muted">
+          <div className="grid grid-cols-5 gap-4 px-6 py-3">
+            <div className="text-sm text-muted-foreground">Customer name</div>
+            <div className="text-sm text-muted-foreground">Email</div>
+            <div className="text-sm text-muted-foreground">Location</div>
+            <div className="text-sm text-muted-foreground">Spent</div>
+            <div className="text-sm text-muted-foreground"></div>
           </div>
-        ))}
-      </div>
-    </Card>
+          <div className="divide-y divide-muted/30">
+            {transactions.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="grid grid-cols-5 gap-4 px-6 py-4 hover:bg-muted/50 transition-colors duration-200"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+                    <span className="text-sm font-medium">{transaction.name.charAt(0)}</span>
+                  </div>
+                  <span className="text-sm font-medium">{transaction.name}</span>
+                </div>
+                <div className="text-sm text-muted-foreground self-center">{transaction.email}</div>
+                <div className="text-sm text-muted-foreground self-center">{transaction.location}</div>
+                <div className="text-sm font-medium self-center">{transaction.amount}</div>
+                <div className="flex justify-end">
+                  <button className="text-sm text-muted-foreground hover:text-foreground">•••</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Card>
+    </div>
   );
 };
 
