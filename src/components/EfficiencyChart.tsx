@@ -1,4 +1,5 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { Card } from "@/components/ui/card";
 
 const data = [
   { name: 'Spent', value: 70 },
