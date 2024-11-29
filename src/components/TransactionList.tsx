@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, ChevronUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -45,8 +45,48 @@ const transactions = [
   },
 ];
 
+type SortConfig = {
+  key: 'name' | 'email' | 'location' | 'amount';
+  direction: 'asc' | 'desc';
+} | null;
+
 const TransactionList = () => {
   const [date, setDate] = useState<Date>();
+  const [sortConfig, setSortConfig] = useState<SortConfig>(null);
+
+  const sortedTransactions = [...transactions].sort((a, b) => {
+    if (!sortConfig) return 0;
+
+    const { key, direction } = sortConfig;
+    let aValue = key === 'amount' ? parseFloat(a[key].replace('$', '')) : a[key];
+    let bValue = key === 'amount' ? parseFloat(b[key].replace('$', '')) : b[key];
+
+    if (aValue < bValue) return direction === 'asc' ? -1 : 1;
+    if (aValue > bValue) return direction === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const handleSort = (key: SortConfig['key']) => {
+    setSortConfig((currentSort) => {
+      if (currentSort?.key === key) {
+        return currentSort.direction === 'asc'
+          ? { key, direction: 'desc' }
+          : null;
+      }
+      return { key, direction: 'asc' };
+    });
+  };
+
+  const getSortIcon = (key: SortConfig['key']) => {
+    if (sortConfig?.key === key) {
+      return (
+        <ChevronUpDown className={`ml-1 h-4 w-4 ${
+          sortConfig.direction === 'asc' ? 'transform rotate-180' : ''
+        }`} />
+      );
+    }
+    return <ChevronUpDown className="ml-1 h-4 w-4 text-muted-foreground/50" />;
+  };
 
   return (
     <div className="space-y-4">
@@ -119,14 +159,34 @@ const TransactionList = () => {
       <Card className="bg-secondary/50 border-0">
         <div className="min-w-full divide-y divide-muted">
           <div className="grid grid-cols-5 gap-4 px-6 py-3">
-            <div className="text-sm text-muted-foreground">Customer name</div>
-            <div className="text-sm text-muted-foreground">Email</div>
-            <div className="text-sm text-muted-foreground">Location</div>
-            <div className="text-sm text-muted-foreground">Spent</div>
+            <button 
+              onClick={() => handleSort('name')} 
+              className="text-sm text-muted-foreground flex items-center cursor-pointer hover:text-foreground"
+            >
+              Customer name {getSortIcon('name')}
+            </button>
+            <button 
+              onClick={() => handleSort('email')} 
+              className="text-sm text-muted-foreground flex items-center cursor-pointer hover:text-foreground"
+            >
+              Email {getSortIcon('email')}
+            </button>
+            <button 
+              onClick={() => handleSort('location')} 
+              className="text-sm text-muted-foreground flex items-center cursor-pointer hover:text-foreground"
+            >
+              Location {getSortIcon('location')}
+            </button>
+            <button 
+              onClick={() => handleSort('amount')} 
+              className="text-sm text-muted-foreground flex items-center cursor-pointer hover:text-foreground"
+            >
+              Spent {getSortIcon('amount')}
+            </button>
             <div className="text-sm text-muted-foreground"></div>
           </div>
           <div className="divide-y divide-muted/30">
-            {transactions.map((transaction) => (
+            {sortedTransactions.map((transaction) => (
               <div
                 key={transaction.id}
                 className="grid grid-cols-5 gap-4 px-6 py-4 hover:bg-muted/50 transition-colors duration-200"
